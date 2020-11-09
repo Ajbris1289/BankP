@@ -6,10 +6,10 @@
 
 using namespace std;
 
-// constant variables
+
 const string ACCOUNT_FILE_NAME("accounts.dat");
 const int MAX_TRANSACTIONS(3);
-// accont structure
+
 struct Account{
     string aName; // name of the account
     string uName; // user name of the account
@@ -33,7 +33,7 @@ struct Account{
     }
 };
 
-// read from csv file. it is assumed that each line represents an account and they have the format,"Robert Brown,rbrown,blue123,2500,350".
+
 void getData(string fName, vector<Account>& accounts){
     ifstream input(fName);
     string line;
@@ -50,8 +50,7 @@ void getData(string fName, vector<Account>& accounts){
     }
 }
 
-// verifies the password. Entry of password as * is not supported it will show the password.
-// returns true if password is correct else false
+// Checks creds
 bool credCheck(const Account& acc){
     string pass;
     cout << "Enter Password : ";
@@ -63,10 +62,7 @@ bool credCheck(const Account& acc){
     return false;
 }
 
-// get the account to be used for transaction.
-// if the password entered is wrong 3 times then returns -2
-// if user name doesnt exist then returns -1;
-// else returns 0.
+// Gets username, ends after 3 incorrect tries
 int getAccount(vector<Account>& accounts)
 {
     string username;
@@ -101,12 +97,12 @@ int getAccount(vector<Account>& accounts)
 }
 
 
-// deposit amount to account.
+//Adds deposit amount to account
 int Deposit(Account& acc)
 {
     int acco = 0;
     int amount;
-    acc.tCount++; // increment the number of transactions of th account.
+    acc.tCount++; // increment the number of transactions
     // read account type   
     cout << "1. Savings Account\n2. Checking Account\nSelect Account Type:";
     cin >> acco;
@@ -114,7 +110,7 @@ int Deposit(Account& acc)
         cout << "Wrong Account type!!" << endl;
         return -1;
     }
-    // get amount to be deposited.
+
     cout << "Please Enter the amount to be deposited: ";
     cin >> amount;
     
@@ -125,7 +121,7 @@ int Deposit(Account& acc)
         }
         else{
         acc.sAcc += amount;
-        cout << "$" << amount << "Deposited to Savings account of " << acc.aName << endl;    
+        cout << "$" << amount << " Deposited to Savings account of " << acc.aName << endl;    
         }    
     }
     else{
@@ -134,7 +130,7 @@ int Deposit(Account& acc)
         }
         else{
         acc.cAcc += amount;
-        cout << "$" << amount << "Deposited to Checking account of " << acc.aName << endl;   
+        cout << "$" << amount << " Deposited to Checking account of " << acc.aName << endl;   
         } 
     }
     acc.display();
@@ -145,7 +141,7 @@ int Deposit(Account& acc)
 int Withdraw(Account& acc){
     int acco = 0;
     long amount;
-    acc.tCount++; // increment the number of transactions of th account.
+    acc.tCount++;.
     cout << "1. Savings Account\n2. Checking Account\nSelect Account Type:";
     cin >> acco;
     // get account type.
@@ -162,7 +158,7 @@ int Withdraw(Account& acc){
     if (acco == 1){
         if (amount <= acc.sAcc){
             acc.sAcc -= amount;
-            cout << "$" << amount << "WithDrawn from Saving account of " << acc.aName << endl;
+            cout << "$" << amount << " WithDrawn from Saving account of " << acc.aName << endl;
         }
         else
             cout << "Not enough money in the account!!" << endl;
@@ -170,7 +166,7 @@ int Withdraw(Account& acc){
     else{
         if (amount <= acc.cAcc){
             acc.cAcc -= amount;
-            cout << "$" << amount << "WithDrawn from Checking account of " << acc.aName << endl;
+            cout << "$" << amount << " WithDrawn from Checking account of " << acc.aName << endl;
         }
         else
             cout << "Not enough money in the account!!" << endl;
@@ -181,7 +177,7 @@ int Withdraw(Account& acc){
 
 // shows the balance if account is valid.
 int bInquiry(Account& acc){
-    acc.tCount++; // increment the number of transactions of th account.
+    acc.tCount++; 
     acc.display();
     return 0;
 }
@@ -193,7 +189,7 @@ int TransferBalance(vector<Account>& accounts, Account& acc){
     int acco;
     long amount;
 
-    acc.tCount++; // increment the number of transactions of th account.
+    acc.tCount++; // increment the number of transactions
     cout<< "Username of receiver: ";
     cin >> receiver;
     // get payee account
@@ -208,7 +204,7 @@ int TransferBalance(vector<Account>& accounts, Account& acc){
         cout << "Invalid receiver account! " << endl;
         return -1;
     }
-    // get the account type , assumption is that transfer can happen between accounts of same type.
+    //Lets user choose which account type
     cout << "1. Savings Account\n2. Checking Account\nSelect Account Type:";
     cin >> acco;
     if (acco != 1 && acco != 2){
@@ -220,7 +216,7 @@ int TransferBalance(vector<Account>& accounts, Account& acc){
     if (amount < 0){
         return -1;
     }
-    // transfer the amount.
+  
     if (acco == 1){
         if (acco <= acc.sAcc){
             acc.sAcc -= amount;
@@ -264,8 +260,7 @@ int main()
     getData(ACCOUNT_FILE_NAME, accounts);
     int choice;
     int ret = -1;
-    // loop infinitely till exit is pressed
-    // user completes 3 transactions
+    // loop infinitely till exit is pressed user completes 3 transactions
 
     int acc = 0;
     // loop till valid user name is entered.
